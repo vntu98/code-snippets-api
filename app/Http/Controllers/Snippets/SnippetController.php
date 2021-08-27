@@ -42,4 +42,23 @@ class SnippetController extends Controller
             ->transformWith(new SnippetTransformer())
             ->toArray();
     }
+
+    public function update(Request $request, Snippet $snippet)
+    {
+        $this->validate($request, [
+            'title' => 'nullable'
+        ]);
+
+        $snippet->update($request->only('title'));
+
+        return fractal()
+            ->item($snippet)
+            ->parseIncludes([
+                'steps',
+                'author',
+                'user'
+            ])
+            ->transformWith(new SnippetTransformer())
+            ->toArray();
+    }
 }
