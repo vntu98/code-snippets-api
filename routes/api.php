@@ -20,4 +20,5 @@ Route::group(['prefix' => 'snippets'], function () {
 
     Route::patch('{snippet}/steps/{step}', [StepController::class, 'update']);
     Route::post('{snippet}/steps', [StepController::class, 'store']);
+    Route::delete('{snippet}/steps/{step}', [StepController::class, 'destroy']);
 });
