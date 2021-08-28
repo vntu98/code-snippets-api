@@ -17,6 +17,8 @@ class SnippetController extends Controller
 
     public function show(Snippet $snippet)
     {
+        $this->authorize('show', $snippet);
+
         return fractal()
             ->item($snippet)
             ->parseIncludes([
@@ -45,11 +47,14 @@ class SnippetController extends Controller
 
     public function update(Request $request, Snippet $snippet)
     {
+        $this->authorize('update', $snippet);
+
         $this->validate($request, [
-            'title' => 'nullable'
+            'title' => 'nullable',
+            'is_public' => 'nullable|boolean'
         ]);
 
-        $snippet->update($request->only('title'));
+        $snippet->update($request->only('title', 'is_public'));
 
         return fractal()
             ->item($snippet)

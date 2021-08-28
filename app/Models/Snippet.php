@@ -12,7 +12,8 @@ class Snippet extends Model
 
     protected $fillable = [
         'uuid',
-        'title'
+        'title',
+        'is_public'
     ];
 
     public function getRouteKeyName()
@@ -31,6 +32,11 @@ class Snippet extends Model
         static::creating(function (Snippet $snippet) {
             $snippet->uuid = Str::uuid();
         });
+    }
+
+    public function isPublic()
+    {
+        return $this->is_public;
     }
 
     public function steps()

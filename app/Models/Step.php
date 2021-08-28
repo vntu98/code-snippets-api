@@ -29,6 +29,11 @@ class Step extends Model
         });
     }
 
+    public function snippet()
+    {
+        return $this->belongsTo(Snippet::class);
+    }
+
     public function afterOrder()
     {
         $adjacent = self::where('order', '>', $this->order)

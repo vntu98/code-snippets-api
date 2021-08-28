@@ -12,11 +12,15 @@ class StepController extends Controller
 {
     public function update(Request $request, Snippet $snippet, Step $step)
     {
+        $this->authorize('update', $step);
+
         $step->update($request->only('title', 'body'));
     }
 
     public function store(Request $request, Snippet $snippet)
     {
+        $this->authorize('storeStep', $snippet);
+        
         $step = $snippet->steps()->create($request->only('title', 'body') + [
             'order' => $this->getOrder($request)
         ]);
@@ -29,6 +33,8 @@ class StepController extends Controller
 
     public function destroy(Snippet $snippet, Step $step)
     {
+        $this->authorize('destroy', $step);
+
         if ($snippet->steps->count() === 1) {
             return response(null, 400);
         }
