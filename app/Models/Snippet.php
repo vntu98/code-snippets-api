@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Transformers\Snippets\SnippetTransformer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,18 @@ class Snippet extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    public function toSearchableArray()
+    {
+        return fractal()
+            ->item($this)
+            ->transformWith(new SnippetTransformer())
+            ->parseIncludes([
+                'author',
+                'steps'
+            ])
+            ->toArray();
     }
 
     protected static function booted()
