@@ -30,6 +30,7 @@ Route::group(['prefix' => 'snippets'], function () {
 
 Route::group(['prefix' => 'users/{user}'], function () {
     Route::get('', [UserController::class, 'show']);
+    Route::patch('', [UserController::class, 'update']);
     Route::get('snippets', [UsersSnippetController::class, 'index']);
 });
 
